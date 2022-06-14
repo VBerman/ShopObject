@@ -1,0 +1,38 @@
+﻿@page "/counter"
+
+
+<p>First number</p>
+<input style="margin-bottom:15px" inputmode="numeric" @bind-value="firstNumber" />
+<p>Second number</p>
+<input style="margin-bottom:15px" inputmode="numeric" @bind-value="secondNumber" />
+<button @onclick="Sum">Sum</button>
+
+<p>Result</p>
+<h2>@result</h2>
+
+<h1 style="color:red">@errorMessage</h1>
+@code {
+    private string firstNumber { get; set; } = "111";
+    private string secondNumber { get; set; } = "222";
+
+    private int result { get; set; } = 0;
+
+    private void Sum()
+    {
+        var firstNumberResult = 0;
+        var secondNumberResult = 0;
+
+        if (int.TryParse(firstNumber, out firstNumberResult) &
+        int.TryParse(secondNumber, out secondNumberResult))
+        {
+            result = firstNumberResult + secondNumberResult;
+            errorMessage = "";
+        }
+        else
+        {
+            errorMessage = "ЧИСЛА ВВОДИ ПОЖАЛУЙСТА";
+        }
+    }
+
+    private string errorMessage { get; set; } = "";
+}
