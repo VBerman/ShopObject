@@ -1,9 +1,22 @@
 ﻿@page "/"
+@using Microsoft.EntityFrameworkCore
+@using ShopObject.Model
+@inject IDbContextFactory<ShopObjectContext> DB
+@foreach (var client in Clients)
+{
+    <p>client.FullName</p>
+}
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+@code {
+    List<Client> Clients = new();
 
-Welcome to your new app.
+    protected override async Task OnInitializedAsync()
+    {
+        using (var db = DB.CreateDbContext())
+        {
+            Clients = db.Clients.ToList();
+        }
+    }
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+}
